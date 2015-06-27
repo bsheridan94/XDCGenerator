@@ -8,6 +8,7 @@ import tkMessageBox
 
 def importConstrainsFile():
 	print "Importing constrains file\n"
+	choosen = askopenfilename(initialdir='~')
 
 
 def helloCallBack():
@@ -31,6 +32,13 @@ def generateConstraintsFile():
 			outputFile.write("\n\tset_property IOSTANDARD LVCMOS33 [" + sw[i][3].get() + 
 				"}]")
 
+	outputFile.write("\n## LEDS")
+	for i in range(len(led)):
+		if led[i][1].get() == 1:
+			outputFile.write("\nset_property PACKAGE_PIN "+ led[i][4] + " [get_ports {" + led[i][3].get() + 
+				"}]")
+			outputFile.write("\n\tset_property IOSTANDARD LVCMOS33 [" + led[i][3].get() + 
+				"}]")
 
 
 if __name__ == '__main__':
@@ -42,7 +50,7 @@ if __name__ == '__main__':
 
 	w = Label(root, text="XDC Generator for Basys3") 
 	w.config(bg='black', fg='white',cursor='gumby')
-	w.pack()
+	w.grid(row=0, column=0, columnspan=4)
 	number = IntVar()
 
 
@@ -68,8 +76,8 @@ if __name__ == '__main__':
 		sw[i][2] = Checkbutton(root, text = sw[i][0], variable = sw[i][1], \
 	                 onvalue = 1, offvalue = 0, height=1, \
 	                 width = 4)
-		sw[i][2].pack()
-		sw[i][3].pack()
+		sw[i][2].grid(row=i+1, column=0, columnspan=1)
+		sw[i][3].grid(row=i+1, column=1, columnspan=1)
 
 
 	for i in range(len(led)):
@@ -77,14 +85,14 @@ if __name__ == '__main__':
 		led[i][2] = Checkbutton(root, text = led[i][0], variable = led[i][1], \
 	                 onvalue = 1, offvalue = 0, height=1, \
 	                 width = 4)
-		led[i][2].pack()
-		led[i][3].pack()
+		led[i][2].grid(row=i+1, column=2, columnspan=1)
+		led[i][3].grid(row=i+1, column=3, columnspan=1)
 
 
 
 
 
-	generate = Button(text='Generate', command=generateConstraintsFile).pack(fill=X)
+	generate = Button(text='Generate', command=generateConstraintsFile).grid()
 
 	#listbox.pack()
 	root.mainloop()
