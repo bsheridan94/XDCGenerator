@@ -9,6 +9,7 @@ import tkMessageBox
 def importConstrainsFile():
 	print "Importing constrains file\n"
 	choosen = askopenfilename(initialdir='~')
+	
 
 
 def helloCallBack():
@@ -38,6 +39,14 @@ def generateConstraintsFile():
 			outputFile.write("\nset_property PACKAGE_PIN "+ led[i][4] + " [get_ports {" + led[i][3].get() + 
 				"}]")
 			outputFile.write("\n\tset_property IOSTANDARD LVCMOS33 [" + led[i][3].get() + 
+				"}]")
+
+	outputFile.write("\n##Buttons")
+	for i in range(len(button)):
+		if button[i][1].get() == 1:
+			outputFile.write("\nset_property PACKAGE_PIN "+ button[i][4] + " [get_ports {" + button[i][3].get() + 
+				"}]")
+			outputFile.write("\n\tset_property IOSTANDARD LVCMOS33 [" + button[i][3].get() + 
 				"}]")
 
 
@@ -71,6 +80,8 @@ if __name__ == '__main__':
 	led = [["led[0]", IntVar(), 1, Entry(root), "U16"],["led[1]", IntVar(), 1, Entry(root), "E19"],["led[2]", IntVar(), 1, Entry(root), "U19"],["led[3]", IntVar(), 1, Entry(root), "V19"],["led[4]", IntVar(), 1, Entry(root), "W18"],["led[5]", IntVar(), 1, Entry(root), "U15"],["led[6]", IntVar(), 1, Entry(root), "U14"],["led[7]", IntVar(), 1, Entry(root), "V14"],["led[8]", IntVar(), 1, Entry(root), "V13"],["led[9]", IntVar(), 1, Entry(root), "V3"],["led[10]", IntVar(), 1, Entry(root), "W3"],["led[11]", IntVar(), 1, Entry(root), "U3"],["led[12]", IntVar(), 1, Entry(root), "P3"],["led[13]", IntVar(), 1, Entry(root), "N3"],["led[14]", IntVar(), 1, Entry(root), "P1"],["led[15]", IntVar(), 1, Entry(root), "L1"]]
 
 
+	button = [["button[0]", IntVar(), 1, Entry(root), "U18"], ["button[1]", IntVar(), 1, Entry(root), "T18"], ["button[2]", IntVar(), 1, Entry(root), "W19"], ["button[3]", IntVar(), 1, Entry(root), "T17"], ["button[4]", IntVar(), 1, Entry(root), "U17"]]
+
 	for i in range(len(sw)):
 		print sw[i]
 		sw[i][2] = Checkbutton(root, text = sw[i][0], variable = sw[i][1], \
@@ -88,7 +99,13 @@ if __name__ == '__main__':
 		led[i][2].grid(row=i+1, column=2, columnspan=1)
 		led[i][3].grid(row=i+1, column=3, columnspan=1)
 
-
+	for i in range(len(button)):
+		print button[i]
+		button[i][2] = Checkbutton(root, text = button[i][0], variable = button[i][1], \
+	                 onvalue = 1, offvalue = 0, height=1, \
+	                 width = 4)
+		button[i][2].grid(row=i+1, column=4, columnspan=1)
+		button[i][3].grid(row=i+1, column=5, columnspan=1)
 
 
 
