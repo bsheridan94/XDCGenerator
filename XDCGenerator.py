@@ -41,6 +41,14 @@ def generateConstraintsFile():
 			outputFile.write("\n\tset_property IOSTANDARD LVCMOS33 [" + led[i][3].get() + 
 				"}]")
 
+	outputFile.write("\n##7 Segment Display")
+	for i in range(len(segmentDisplay)):
+		if segmentDisplay[i][1].get() == 1:
+			outputFile.write("\nset_property PACKAGE_PIN "+ segmentDisplay[i][4] + " [get_ports {" + segmentDisplay[i][3].get() + 
+				"}]")
+			outputFile.write("\n\tset_property IOSTANDARD LVCMOS33 [" + segmentDisplay[i][3].get() + 
+				"}]")
+
 	outputFile.write("\n##Buttons")
 	for i in range(len(button)):
 		if button[i][1].get() == 1:
@@ -48,7 +56,6 @@ def generateConstraintsFile():
 				"}]")
 			outputFile.write("\n\tset_property IOSTANDARD LVCMOS33 [" + button[i][3].get() + 
 				"}]")
-
 
 if __name__ == '__main__':
 	root = Tkinter.Tk()
@@ -82,6 +89,8 @@ if __name__ == '__main__':
 
 	button = [["button[0]", IntVar(), 1, Entry(root), "U18"], ["button[1]", IntVar(), 1, Entry(root), "T18"], ["button[2]", IntVar(), 1, Entry(root), "W19"], ["button[3]", IntVar(), 1, Entry(root), "T17"], ["button[4]", IntVar(), 1, Entry(root), "U17"]]
 
+	segmentDisplay = [["segmentDisplay[0]", IntVar(), 1, Entry(root), "W7"], ["segmentDisplay[1]", IntVar(), 1, Entry(root), "W6"], ["segmentDisplay[2]", IntVar(), 1, Entry(root), "U8"], ["segmentDisplay[3]", IntVar(), 1, Entry(root), "V8"], ["segmentDisplay[4]", IntVar(), 1, Entry(root), "U5"], ["segmentDisplay[5]", IntVar(), 1, Entry(root), "V5"], ["segmentDisplay[6]", IntVar(), 1, Entry(root), "U7"], ["segmentDisplay[7]", IntVar(), 1, Entry(root), "V7"], ["segmentDisplay[8]", IntVar(), 1, Entry(root), "U2"], ["segmentDisplay[9]", IntVar(), 1, Entry(root), "U4"], ["segmentDisplay[10]", IntVar(), 1, Entry(root), "V4"], ["segmentDisplay[11]", IntVar(), 1, Entry(root), "W4"]]
+
 	for i in range(len(sw)):
 		print sw[i]
 		sw[i][2] = Checkbutton(root, text = sw[i][0], variable = sw[i][1], \
@@ -107,7 +116,13 @@ if __name__ == '__main__':
 		button[i][2].grid(row=i+1, column=4, columnspan=1)
 		button[i][3].grid(row=i+1, column=5, columnspan=1)
 
-
+	for i in range(len(segmentDisplay)):
+		print segmentDisplay[i]
+		segmentDisplay[i][2] = Checkbutton(root, text = segmentDisplay[i][0], variable = segmentDisplay[i][1], \
+	                 onvalue = 1, offvalue = 0, height=1, \
+	                 width = 4)
+		segmentDisplay[i][2].grid(row=i+1, column=6, columnspan=1)
+		segmentDisplay[i][3].grid(row=i+1, column=7, columnspan=1)
 
 	generate = Button(text='Generate', command=generateConstraintsFile).grid()
 
